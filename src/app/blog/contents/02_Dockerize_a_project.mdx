@@ -1,0 +1,104 @@
+### Dockerize a Project
+
+Before this, please install Docker. Here's how you can get started:
+
+- Go to [Play with Docker](https://www.docker.com/play-with-docker/).
+- Sign in from [app.docker.com](https://app.docker.com).
+- Explore the repository sections in Docker Hub.
+
+For temporary setups, you can use [labs-playdocker](https://labs.play-with-docker.com/). Alternatively, you can also download **Docker Desktop**, and its installation process is very easy.
+
+Once installed, open Docker Desktop.
+
+---
+
+### Steps to Dockerize a Project
+
+1. Clone a repository from the following link:
+
+   ```
+   https://github.com/docker/getting-started-app
+   ```
+
+2. In the project directory, add a file named `Dockerfile` with the following content:
+
+   ```dockerfile
+   FROM node:18-alpine
+
+   WORKDIR /app
+
+   # Copying from the current directory to the work directory in the container
+   COPY . .
+
+   RUN yarn install --production
+
+   CMD ["node", "src/index.js"]
+
+   EXPOSE 3000
+   ```
+
+3. Build the Docker image:
+
+   - Open the terminal and make sure Docker Desktop is running.
+   - Run the following command:
+     ```shell
+     docker build -t todo .
+     ```
+
+4. After the build is complete, check the Docker images:
+
+   ```shell
+   docker images
+   ```
+
+5. Push the image to Docker Hub:
+
+   - First, authenticate using the command:
+     ```shell
+     docker login
+     ```
+   - Tag your image using the following command:
+     ```shell
+     docker tag todo:latest username/test-repo
+     ```
+     Example:
+     ```shell
+     docker tag todo:latest idibyaranjan15/test-repo
+     ```
+   - Push the image to Docker Hub:
+     ```shell
+     docker push username/test-repo:latest
+     ```
+     Example:
+     ```shell
+     docker push idibyaranjan15/test-repo:latest
+     ```
+
+6. Pull the image from Docker Hub:
+
+   ```shell
+   docker pull username/test-repo:latest
+   ```
+
+   Example:
+
+   ```shell
+   docker pull idibyaranjan15/test-repo:latest
+   ```
+
+7. Run the image:
+
+   ```shell
+   docker run -dp 3000:3000 username/test-repo:latest
+   ```
+
+   Example:
+
+   ```shell
+   docker run -dp 3000:3000 idibyaranjan15/test-repo:latest
+   ```
+
+8. To check what is running, use the command:
+   ```shell
+   docker ps
+   ```
