@@ -1,0 +1,113 @@
+## Docker
+
+### Isolated Environment
+
+Docker provides an **isolated environment** for applications, often referred to as a sandbox. This environment contains everything required to run an application, including libraries and dependencies.
+
+---
+
+### Containers vs Virtual Machines
+
+#### Key Differences
+
+| Feature                | Containers                                   | Virtual Machines                        |
+| ---------------------- | -------------------------------------------- | --------------------------------------- |
+| Isolation Level        | Application-level                            | Operating system-level                  |
+| Infrastructure Sharing | Shared infrastructure but isolated instances | Dedicated infrastructure                |
+| Efficiency             | Lightweight, minimal resource usage          | Heavy, higher resource consumption      |
+| Portability            | Highly portable                              | Less portable                           |
+| Scalability            | Easily scalable                              | Harder to scale                         |
+| Use Case               | Running multiple apps on shared infra        | Running a single app on dedicated infra |
+
+#### Understanding the Concepts
+
+Imagine containers as apartments in a building:
+
+- Each apartment (container) is independent, with its own application, binaries, and dependencies.
+- The building (shared infrastructure) is utilized by many apartments, maximizing resource efficiency.
+
+Now think of virtual machines (VMs) as individual houses:
+
+- Each house (VM) is dedicated to a single family (application), resulting in resource wastage if unused spaces (resources) exist.
+
+From a builder’s perspective:
+
+- Apartments (containers) allow for more families (applications) to reside, optimizing space and cost.
+- Houses (VMs) cater to one family (application), leading to inefficiencies in resource utilization if underutilized.
+
+---
+
+And imagine you just as a builder:
+
+- So, he/she will just buy a land and build rooms as much as they want. That will cost less and get higher income as many families can live in that apartment.
+- The same idea applies for containers. In shared infrastructure but isolated, many containers run separately, and one more thing—minimum wastage of resources.
+
+But if it is an independent house (i.e., virtual machine), then it is more like a piece of land is shared by one family. That means only one application is accessing the VM. There is a lot of waste in resources.
+
+One more thing from a builder’s perspective:
+
+- Suppose in a house there are a total of 6 rooms, but the family only contains 3 members. Then another three rooms are vacant. So, here is a waste of resources.
+- This major problem is solved by containers. It makes optimum use of infrastructure. They only use your memory, CPU, etc., that is only required for them, and it can scale as per your application requirements.
+
+---
+
+### Structure
+
+#### Virtual Machines
+
+1. **Infrastructure**: Physical server or desktop.
+2. **Operating System**: Installed on the physical machine.
+3. **Hypervisor**: Manages virtualization, allowing multiple OS instances (Windows, Ubuntu, Fedora, etc.) to run concurrently.
+4. **Guest OS**: Each virtual machine has its own OS, libraries, binaries, and applications, isolated from others.
+
+#### Containers
+
+1. **Infrastructure**: Physical server.
+2. **Operating System**: Installed on the physical machine.
+3. **Container Engine**: Shares a single OS kernel among containers.
+4. **Containers**: Independent instances with shared kernel, making them lightweight and portable.
+
+---
+
+As hypervisor runs multiple OS instances on a single VM, containers run multiple container instances on a single OS. Containers are lightweight, share the host kernels, and are highly efficient. They are also more portable than VMs.
+
+---
+
+### Dockerfile
+
+A **Dockerfile** is nothing but a set of instructions to dockerize an application.
+
+Then we build the Dockerfile to create Docker images.
+
+#### Why Docker Images?
+
+- You can’t ship Docker containers directly to environments like development, testing, and production.
+- To ship to those environments, you have to build a Dockerfile to create Docker images.
+- You will ship through Docker images.
+
+By executing the build command in your Dockerfile, Docker images get built. After that, you will push those Docker images to a registry.
+
+---
+
+### Docker Registry
+
+A **Registry** is something like a versioning system, such as GitHub or GitLab. You will not store source code in Google Drive or Dropbox because it’s not meant for those purposes. It’s hard to maintain and update.
+
+The same goes for Docker. All Docker images are pushed to a registry. Since images may contain binaries, it’s hard to store, maintain, and update them otherwise.
+
+You will use **Docker Hub**, which is a Docker image registry. Once the image is pushed to the registry or Docker Hub, you can pull these images to different environments (like development, testing, or production) using the `docker pull` command and can run them afterward with the `docker run` command.
+
+This is a simple Docker workflow.
+
+---
+
+### Advantages of Containers
+
+- **Efficient Resource Utilization**: Containers only use the resources required by the application.
+- **Scalability**: Can scale up or down based on application demands.
+- **Portability**: Easy to move between environments without compatibility issues.
+- **Minimal Wastage**: Optimizes infrastructure usage compared to virtual machines.
+
+---
+
+This is a simplified overview of Docker and its workflow. With Docker, modern application deployment becomes efficient, scalable, and portable.
