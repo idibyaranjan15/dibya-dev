@@ -1,0 +1,95 @@
+### Multi-Stage Build with Docker
+
+#### Why Use a Multi-Stage Build?
+
+Multi-stage builds in Docker help you create optimized images by separating the build process into multiple stages. This approach has several benefits:
+
+1. **Reduced Image Size:**
+   By only including the necessary artifacts in the final image (e.g., your application’s build files), you avoid bloating the image with development tools and dependencies that aren’t needed in production.
+
+2. **Improved Security:**
+   By not carrying over unnecessary build tools or source files, you reduce the attack surface of the production image.
+
+3. **Easier Maintenance:**
+   Multi-stage builds make Dockerfiles more modular and easier to read and maintain.
+
+4. **Better Performance:**
+   Smaller images result in faster deployments and quicker image transfers across environments.
+
+---
+
+#### Explaining the Code
+
+Here’s a breakdown of the multi-stage Dockerfile you provided:
+
+```dockerfile
+# Stage 1: Installer
+FROM node:18-alpine AS installer
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:latest AS deployer
+
+COPY --from=installer /app/build /user/share/nginx/html
+
+
+```
+
+**Stage 1: Installer**
+
+- **`FROM node:18-alpine AS installer`:**
+
+  - Starts with a lightweight Node.js image.
+  - The `AS installer` part names this stage `installer`, which we can reference later.
+
+- **`WORKDIR /app`:**
+
+  - Sets `/app` as the working directory inside the container.
+
+- **`COPY package*.json ./`:**
+
+  - Copies `package.json` and `package-lock.json` (if available) to the working directory.
+
+- **`RUN npm install`:**
+
+  - Installs all dependencies listed in `package.json`.
+
+- **`COPY . .`:**
+
+  - Copies the rest of the application’s source code into the container.
+
+- **`RUN npm run build`:**
+  - Runs the build script defined in your `package.json` to generate production-ready files (e.g., static assets).
+
+```dockerfile
+# Stage 2: Deployer
+FROM nginx:latest AS deployer
+
+COPY --from=installer /app/build /usr/share/nginx/html
+```
+
+**Stage 2: Deployer**
+
+- **`FROM nginx:latest AS deployer`:**
+
+  - Starts with the latest Nginx image.
+  - Names this stage `deployer`.
+
+- **`COPY --from=installer /app/build /usr/share/nginx/html`:**
+  - Copies the built application files from the `installer` stage (specifically from `/app/build`) to the default directory served by Nginx (`/usr/share/nginx/html`).
+
+---
+
+### Why It Works
+
+By using a multi-stage build, we:
+
+1. Keep all the Node.js dependencies and build tools in the `installer` stage, ensuring they don’t end up in the final production image.
+2. Copy only the required static files (from `/app/build`) into the lightweight Nginx image in the `deployer` stage, resulting in a smaller and more secure image optimized for serving static content.
