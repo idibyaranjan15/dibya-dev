@@ -1,0 +1,27 @@
+## Why Kubernetes?
+
+Imagine you have a small application with multiple containers running. What happens if one of these containers goes down? You’d need to assign a team to monitor and manage this issue 24/7. While this might be manageable for a small use case, let’s scale this scenario up.
+
+Now, think about an enterprise-level application that is used globally. If 5 to 7 containers go down simultaneously, it becomes incredibly challenging to identify, debug, and fix these issues. You’d need significant manpower to handle the situation. Monitoring and managing everything manually would quickly turn into a hassle.
+
+And there’s more. What happens if the virtual machine hosting all your containers goes down? That’s an even bigger problem.
+
+This is where Kubernetes (K8s) comes into play. It helps address several critical aspects of containerized applications, including:
+
+- **Container Networking**: Ensures seamless communication between containers.
+- **Resource Management**: Allocates and optimizes resources efficiently.
+- **Security**: Implements robust security mechanisms.
+- **High Availability**: Keeps your application running with minimal downtime.
+- **Fault Tolerance**: Automatically handles failures and restarts containers as needed.
+- **Service Discovery**: Simplifies the process of locating services.
+- **Scalability**: Scales applications up or down based on demand.
+- **Load Balancing**: Distributes traffic evenly across containers.
+- **Orchestration**: Automates the deployment, scaling, and management of containerized applications.
+
+However, Kubernetes is not always the right solution. For a small application with only a few containers, using Kubernetes might not make sense. Why? Because:
+
+- The costs can be significant.
+- Resources might be underutilized.
+- It could be a waste of time and energy for the administration team.
+
+In such cases, simpler solutions might be more appropriate. But when your application grows in complexity and scale, Kubernetes becomes an invaluable tool for managing and orchestrating your containers effectively.
