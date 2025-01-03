@@ -1,0 +1,55 @@
+## Kubernetes Architecture
+
+In Kubernetes, the architecture primarily consists of two major components:
+
+1. **Control Plane (Master Node)**: This is the brain of the Kubernetes cluster, responsible for managing and controlling the cluster.
+2. **Nodes and Pods**: Nodes are worker machines connected to the control plane, and Pods are where the containers (e.g., running an NGINX server) are hosted.
+
+### Control Plane (Master Node)
+
+The control plane comprises several critical components:
+
+- **Controller Manager**: Manages the controllers that regulate the state of the cluster.
+- **API Server**: Acts as the gateway to the Kubernetes cluster, handling all REST API requests.
+- **etcd**: A distributed key-value datastore that stores all the cluster data.
+
+### What is etcd?
+
+etcd is a key-value store used to store Kubernetes cluster data. Unlike relational databases (RDBMS), such as SQL, etcd is schemaless. Let’s dive into why this matters.
+
+#### Example: RDBMS vs. Key-Value Datastore
+
+Imagine a relational database table for employee data:
+
+```mdx
+| ID  | Name  | Age | Sex |
+| --- | ----- | --- | --- |
+| 1   | Alice | 30  | F   |
+| 2   | Bob   | 35  | M   |
+```
+
+If you want to add a new field, such as an `Address`, you’d need to alter the table schema to include this column:
+
+```sql
+ALTER TABLE employee ADD COLUMN address VARCHAR(255);
+```
+
+This rigid schema can be a challenge when dealing with dynamic or unstructured data. This is where etcd’s schemaless approach shines.
+
+#### Key-Value Example with etcd
+
+In etcd, data is stored in a flexible key-value format, typically in JSON. For instance:
+
+```json
+{
+  "name": "Dibya",
+  "age": 35,
+  "address": "XYZ"
+}
+```
+
+This flexibility eliminates the need for predefined schemas, making etcd ideal for storing dynamic configuration data.
+
+### Security with etcd
+
+Only the **API Server** has direct access to etcd. This ensures centralized and secure management of the cluster data, providing a controlled access mechanism.
